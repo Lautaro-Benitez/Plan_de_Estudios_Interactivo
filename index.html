@@ -100,7 +100,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .brow{display:grid;grid-template-columns:74px repeat(var(--cols),minmax(210px,1fr));gap:11px;margin-bottom:11px}
 .bhead{margin-bottom:5px}
 .bhead .corner{background:transparent}
-.colh{font-size:12px;font-weight:600;color:#fff;text-align:center;padding:9px;background:#2b2e33;border:1px solid #2b2e33;border-radius:var(--radius-s);letter-spacing:.01em}
+.colh{font-size:12px;font-weight:600;color:#fff;text-align:center;padding:9px 22px;background:#2b2e33;border:1px solid #2b2e33;border-radius:var(--radius-s);letter-spacing:.01em}
 /* fila de año: un solo header de año + cuerpo subdividido */
 .yrow{display:grid;grid-template-columns:74px 1fr;gap:11px;margin-bottom:11px;align-items:stretch}
 .ybody{display:grid;grid-template-columns:repeat(var(--ycols),minmax(210px,1fr));gap:11px}
@@ -131,6 +131,33 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .c-tags{display:flex;gap:3px;flex-shrink:0;align-items:center}
 .tag{font-size:8px;font-weight:700;padding:2px 4px;border-radius:3px;letter-spacing:.03em}
 .tag-opt{background:var(--opt-soft);color:var(--opt)}.tag-anu{background:#fde6cc;color:#9a5b12}
+.tag-equiv{background:#d8e4f1;color:#2f5fa6}
+.hint{font-size:11px;color:var(--ink-3);margin-top:4px;display:block;font-weight:400;text-transform:none;letter-spacing:0}
+
+/* ── colapso de filas (años) y columnas (períodos) ── */
+.colh{cursor:pointer;user-select:none;transition:background .12s}
+.colh:hover{background:#3a3d42}
+.colh.col-collapsed{background:#3a3d42;opacity:.7}
+.colh.col-collapsed:hover{opacity:1}
+.colh .hdr-lbl{display:block;line-height:1.2}
+.yrh{cursor:pointer;user-select:none;transition:background .12s}
+.yrh:hover{background:#3a3d42}
+.yrh-count{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:9px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.04em}
+.yrow.year-collapsed .ybody{display:none}
+.yrow.year-collapsed .yrh{padding:14px 4px 18px}
+.cell.cell-col-collapsed{padding:6px;min-height:auto;background:repeating-linear-gradient(135deg,var(--surface-2),var(--surface-2) 6px,#eef0f3 6px,#eef0f3 12px)}
+.cell.cell-col-collapsed > *{display:none}
+.cell.cell-col-collapsed::after{content:"⋯";display:block;text-align:center;color:var(--ink-3);font-size:14px;font-weight:700;letter-spacing:3px}
+
+/* En mobile el colapso de columnas no tiene sentido (una sola columna). */
+@media (max-width:768px){
+  .colh{cursor:default}
+  .colh:hover{background:#2b2e33}
+  .cell.cell-col-collapsed{padding:8px 9px}
+  .cell.cell-col-collapsed > *{display:revert}
+  .cell.cell-col-collapsed::after{content:""}
+  .cell.cell-col-collapsed{background:var(--surface-2)}
+}
 .c-menu-btn{background:none;border:none;color:var(--ink-3);font-size:16px;line-height:1;padding:0 2px;border-radius:4px;letter-spacing:1px}
 .c-menu-btn:hover{background:var(--surface-2);color:var(--ink)}
 .c-line{font-size:11px;color:var(--ink-2);margin-top:3px;display:flex;gap:5px;align-items:flex-start}
@@ -178,6 +205,18 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .btn-dang:hover{border-color:var(--no);background:var(--no-soft)}
 .btn-dang-solid{color:#fff;background:var(--no);border-color:var(--no)}
 .btn-dang-solid:hover{background:#a32f2f;border-color:#a32f2f}
+.btn-add{color:#fff;background:#1f8a52;border-color:#1f8a52}
+.btn-add:hover{background:#176b40;border-color:#176b40}
+.btn-config{color:#fff;background:#2f5fe0;border-color:#2f5fe0}
+.btn-config:hover{background:#234bbd;border-color:#234bbd}
+.btn-ai{color:#1a1a1a;background:#e8b339;border-color:#e8b339}
+.btn-ai:hover{background:#c9961d;border-color:#c9961d;color:#1a1a1a}
+
+/* ── enlace de ayuda en el footer ── */
+.help-link{color:var(--ink-2);font-weight:600;text-decoration:none;font-size:11px;cursor:pointer;transition:color .12s}
+.help-link:hover,.help-link:focus,.help-link:active{color:var(--accent);text-decoration:none}
+.help-link:visited{color:var(--ink-2)}
+@media print{.help-link{display:none!important}}
 .btn-sm{padding:6px 10px;font-size:12px}
 .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .btn-block{width:100%}
@@ -191,8 +230,11 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .m-x{background:none;border:none;font-size:24px;color:var(--ink-3);width:30px;height:30px;border-radius:6px;line-height:1;transition:background .12s,color .12s}
 .m-x:hover{background:var(--no);color:#fff}
 .m-body{padding:18px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
-.m-foot{display:flex;justify-content:space-between;align-items:center;padding:13px 20px;border-top:1px solid var(--line-2);gap:8px;background:#e6e9ee}
+.m-foot{display:flex;justify-content:flex-end;align-items:center;padding:13px 20px;border-top:1px solid var(--line-2);gap:8px;background:#e6e9ee}
 .m-foot .l,.m-foot .r{display:flex;gap:7px}
+.m-foot .l{margin-right:auto}
+.m-foot .l:empty{display:none}
+.m-foot .btn{min-width:96px}
 
 .field{display:flex;flex-direction:column;gap:5px}
 .field>label{font-size:11px;color:var(--ink-2);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
@@ -295,13 +337,17 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
   .c-top h3{font-size:13px}
 
   /* Modales: ocupan más viewport */
-  .overlay{padding:8px;align-items:flex-start;padding-top:5vh}
+  .overlay{padding:12px;align-items:center;justify-content:center}
   .modal{width:100%!important;max-width:100%!important;max-height:92vh}
   .m-head{padding:13px 14px}
   .m-head h2{font-size:16px}
   .m-body{padding:14px;gap:12px}
-  .m-foot{padding:11px 14px;flex-wrap:wrap}
-  .m-foot .l,.m-foot .r{flex:1}
+  .m-foot{padding:12px 14px;gap:8px;flex-direction:row}
+  .m-foot .r{flex:1;display:flex;gap:8px}
+  .m-foot .r .btn{flex:1;min-width:0;padding:11px 14px;font-size:14px}
+  .m-foot .l{display:none}
+  .app-foot{padding:10px 16px;flex-direction:column;justify-content:center;align-items:center;gap:4px}
+  .foot-info{text-align:center}
   .grid2,.grid3,.grid4{grid-template-columns:1fr 1fr;gap:10px}
   .row.toggles,.switches{flex-direction:column;align-items:stretch;gap:8px}
   .radio-row{flex-direction:column;gap:8px}
@@ -317,6 +363,13 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
   /* About modal */
   .about-hero h3{font-size:16px}
   .about-link{padding:10px 11px;gap:10px}
+
+  /* Modal Generar con IA: prompt más alto en mobile */
+  .ai-prompt{height:300px;min-height:200px;font-size:12px}
+  .ai-steps{padding:10px;gap:6px}
+  .welcome-steps{max-height:55vh;padding:10px}
+  .ai-step b{font-size:12.5px}
+  .ai-step small{font-size:11px}
 }
 
 /* Pantallas muy chicas: ajustes finales */
@@ -331,30 +384,48 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 /* ════ PRINT / PDF ════ */
 .print-only{display:none}
 @media print{
-  @page{margin:14mm;size:A4 landscape}
-  body{background:#fff}
+  @page{margin:12mm;size:A4}
+  body.print-portrait @page{size:A4 portrait}
+  body.print-landscape @page{size:A4 landscape}
+  body{background:#fff!important;color:#1a2230}
   .app,.sidebar,.topbar,.board-wrap{display:block;height:auto;overflow:visible}
-  .sidebar,.topbar,.tip,.toast,.overlay{display:none!important}
+  .sidebar,.topbar,.tip,.toast,.overlay,.fab-open,.sb-backdrop,.progress{display:none!important}
   .main{height:auto;overflow:visible}
   .board-wrap{padding:0}
   .print-only{display:block}
-  .p-head{margin-bottom:14px;border-bottom:2px solid #1a2230;padding-bottom:10px}
-  .p-head h1{font-size:20px}
-  .p-head .pr{font-size:12px;color:#333;margin-top:3px}
-  .p-head .pp{font-size:11px;color:#555;margin-top:2px;display:flex;gap:18px;flex-wrap:wrap}
+  .p-head{margin-bottom:12px;border-bottom:2px solid #1a2230;padding-bottom:8px}
+  .p-head h1{font-size:18px;letter-spacing:-.01em}
+  .p-head .pr{font-size:11px;color:#333;margin-top:3px}
+  .p-head .pp{font-size:10px;color:#555;margin-top:4px;display:flex;gap:14px;flex-wrap:wrap}
   .p-prom{font-family:'IBM Plex Mono',monospace;font-weight:600}
-  .card{break-inside:avoid;box-shadow:none!important;transform:none!important}
-  .card.dim{opacity:1}
-  .card .c-mid .nota{border:none;padding:0}
+  /* Tarjetas más compactas y prolijas en impresión */
+  .card{break-inside:avoid;box-shadow:none!important;transform:none!important;border-width:1px!important;padding:6px 8px;page-break-inside:avoid}
+  .card.dim,.card.filter-off{opacity:1}
+  .card .c-top h3{font-size:11px}
+  .card .c-line{font-size:9.5px;margin-top:2px}
+  .card .c-mid{margin:5px 0 4px}
+  .nota-final .nf-lbl{font-size:7.5px}
+  .nota-final .nf-val{font-size:13px}
+  .mini{font-size:8px;padding:1px 4px}
+  .c-foot{gap:3px}
   .nota::-webkit-outer-spin-button,.nota::-webkit-inner-spin-button{display:none}
-  .brow,.yrow{gap:6px;margin-bottom:6px}
-  .ybody{gap:6px}
-  .cell{background:#fff!important}
-  .cell.annual-cell{background:#fafafa!important}
+  .brow,.yrow{gap:5px;margin-bottom:5px;page-break-inside:avoid}
+  .ybody{gap:5px}
+  .cell{background:#fafafa!important;border:1px solid #ddd!important;padding:5px;min-height:auto}
+  .cell.annual-cell{background:#f0f0f0!important}
+  .yrh{background:#2b2e33!important;color:#fff!important;padding:5px 4px}
+  .yrh .n{font-size:18px}
+  .colh{background:#2b2e33!important;color:#fff!important;padding:5px;font-size:10px}
   .app-foot{display:none}
-  .print-foot{display:block;border-top:1px solid #999;margin-top:14px;padding-top:6px;font-size:10px;color:#666;text-align:right}
+  .print-foot{display:block;border-top:1px solid #999;margin-top:14px;padding-top:6px;font-size:9px;color:#666;text-align:right}
   .c-menu-btn,.estado-sel{display:none!important}
-  .card.filter-off{opacity:.2}
+  /* En impresión mostramos solo el estado como mini-badge legible */
+  .card .c-mid::before{content:attr(data-print-estado);display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 5px;border-radius:3px;background:#eee;color:#444;flex:1}
+  .card.s-aprobada .c-mid::before{background:var(--ok-soft);color:var(--ok)}
+  .card.s-regularizada .c-mid::before{background:#e0ecf9;color:#2557a8}
+  .card.s-libre .c-mid::before{background:var(--no-soft);color:var(--no)}
+  .card.s-en_curso .c-mid::before{background:var(--warn-soft);color:var(--warn)}
+  .card.s-bloqueada .c-mid::before{background:#e9ebef;color:var(--ink-2)}
 }
 
 /* ── selector de estado en tarjeta ── */
@@ -399,7 +470,11 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .cell.drop{background:var(--accent-soft);border-color:var(--accent);border-style:solid}
 
 /* ── footer sidebar y app ── */
-.app-foot{padding:8px 22px;background:var(--surface);border-top:1px solid var(--line);font-size:11px;color:var(--ink-3);text-align:right;flex-shrink:0}
+.app-foot{padding:8px 22px;background:var(--surface);border-top:1px solid var(--line);font-size:11px;color:var(--ink-3);flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.foot-info{text-align:right}
+.ver-link{font-weight:700;color:var(--ink);text-decoration:none}
+.ver-link,.ver-link:hover,.ver-link:active,.ver-link:focus,.ver-link:visited{text-decoration:none}
+.app-foot:hover .ver-link{color:var(--accent)}
 
 /* ── toast con acción ── */
 .toast-btn{margin-left:14px;background:var(--accent);color:#fff;border:none;padding:5px 12px;border-radius:5px;font-weight:600;font-size:12px;cursor:pointer}
@@ -421,6 +496,23 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .about-link:hover .about-arrow{opacity:.9;transform:translate(2px,-2px)}
 .about-credit{font-size:12px;color:var(--ink-3);text-align:center;line-height:1.5;padding-top:8px;border-top:1px solid var(--line);margin-top:2px}
 .about-credit b{color:var(--ink);font-weight:600}
+
+/* ── modal: generar con IA ── */
+.ai-intro{font-size:13px;color:var(--ink-2);line-height:1.55}
+.ai-steps{display:flex;flex-direction:column;gap:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:12px}
+.welcome-steps{max-height:420px;overflow-y:auto;padding:14px}
+.welcome-steps:first-child .welcome-section,.welcome-steps>.welcome-section:first-child{margin-top:0;border-top:none;padding-top:0}
+.welcome-section{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);padding-top:10px;margin-top:6px;border-top:1px solid var(--line)}
+.ai-step-warn .ai-num{background:var(--warn);color:#fff}
+.ai-step-warn{background:var(--warn-soft);border-radius:6px;padding:8px;margin:0 -4px}
+.ai-step{display:flex;gap:11px;align-items:flex-start}
+.ai-num{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:#7a4ec2;color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.ai-step b{font-size:13px;color:var(--ink);font-weight:600;display:block;line-height:1.3}
+.ai-step small{font-size:11.5px;color:var(--ink-2);display:block;margin-top:2px;line-height:1.45}
+.ai-step code{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--surface);border:1px solid var(--line);padding:1px 4px;border-radius:3px}
+.ai-prompt{width:100%;height:220px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.5;background:#23262a;color:#cfd6e2;border:1px solid var(--line);border-radius:6px;padding:12px;resize:vertical;outline:none;min-height:140px}
+.ai-prompt:focus{border-color:var(--accent)}
+.ai-warn{font-size:11.5px;color:#8a6310;background:#fdf1cf;border:1px solid #f0d77a;padding:8px 11px;border-radius:6px;line-height:1.5}
 
 /* ── modal what's new ── */
 .wn-intro{font-size:13px;color:var(--ink-2);line-height:1.55}
@@ -457,7 +549,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   </div>
   <div class="loader-foot">
-    <span class="loader-ver">v<span id="loaderVerLbl">1.1.0</span></span>
+    <span class="loader-ver">v<span id="loaderVerLbl">1.4.0</span></span>
     <span class="loader-sep">·</span>
     <span class="loader-by">Lautaro Benitez · 2026</span>
   </div>
@@ -481,9 +573,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 
       <div class="sb-sec">
         <div class="sb-actions">
-          <button class="btn btn-pri btn-block" id="btnAdd">+ Agregar materia</button>
-          <button class="btn btn-dark btn-block" id="btnConfig">⚙ Configuración</button>
-          <button class="btn btn-dark btn-block" id="btnAbout">ℹ Acerca de</button>
+          <button class="btn btn-add btn-block" id="btnAdd">+ Agregar materia</button>
         </div>
       </div>
 
@@ -496,10 +586,10 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
       <div class="sb-sec">
         <h2>Datos</h2>
         <div class="btn-grid">
-          <button class="btn btn-dark btn-sm" id="btnExport">Exportar</button>
-          <button class="btn btn-dark btn-sm" id="btnImport">Importar</button>
           <button class="btn btn-dark btn-sm" id="btnPdf">PDF</button>
           <button class="btn btn-dark btn-sm" id="btnClean">Limpiar notas</button>
+          <button class="btn btn-config btn-sm" id="btnConfig" style="grid-column:1/-1">Configuración</button>
+          <button class="btn btn-ai btn-sm" id="btnAI" style="grid-column:1/-1">Generar con IA</button>
           <button class="btn btn-dang-solid btn-sm" id="btnWipe" style="grid-column:1/-1">Borrar todo</button>
         </div>
         <input type="file" id="fileInput" accept="application/json" hidden>
@@ -537,7 +627,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
       <div class="print-only p-head" id="printHead"></div>
       <div class="board" id="board"></div>
     </div>
-    <footer class="app-foot print-foot">Plan de Estudios v<span class="vlbl"></span> · Lautaro Benitez · 2026</footer>
+    <footer class="app-foot print-foot"><a href="#" class="help-link" id="btnHelp">Ayuda</a><span class="foot-info">Plan de Estudios <b class="ver-link">v<span class="vlbl"></span></b> · Lautaro Benitez · 2026</span></footer>
   </div>
 </div>
 
@@ -565,8 +655,8 @@ var store={
 var uid=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);};
 
 var PERIODS={bimestre:{label:'Bimestre',cols:6},trimestre:{label:'Trimestre',cols:3},semestre:{label:'Semestre',cols:2},cuatrimestre:{label:'Cuatrimestre',cols:2}};
-var APP_VERSION='1.1.0';
-var DATA_VERSION=2;
+var APP_VERSION='1.4.0';
+var DATA_VERSION=3;
 // ─────────────────────────────────────────────────────────────────────────
 // Novedades por versión (más reciente primero). Alineado con CHANGELOG.md
 //
@@ -580,6 +670,28 @@ var DATA_VERSION=2;
 // hayan saltado desde su última visita. NO se tocan sus datos guardados.
 // ─────────────────────────────────────────────────────────────────────────
 var CHANGES_BY_VERSION=[
+  {v:'1.4.0',fecha:'2026-06-11',titulo:'Guía de inicio y botones de color',cambios:[
+    'Modal de bienvenida con guía paso a paso al iniciar la app por primera vez.',
+    'Botón flotante de ayuda (?) en la esquina inferior derecha para reabrir la guía en cualquier momento.',
+    'Botones principales ahora con colores distintivos: Agregar materia en verde, Configuración en azul, Generar con IA en amarillo.',
+    'En mobile, el modal "Generar con IA" permite ver el prompt mucho más cómodamente con scroll y mayor altura.'
+  ]},
+  {v:'1.3.0',fecha:'2026-06-11',titulo:'Mejoras de UI y exportación a PDF',cambios:[
+    '"Acerca de" se abre haciendo click en la versión del footer (botón quitado del sidebar).',
+    'Colapsar columnas y filas con click directo en el encabezado, sin botones extra.',
+    'Importar y Exportar JSON se centralizan en el modal Configuración (botones quitados del sidebar).',
+    'Botones unificados visualmente en todos los modales: "Cancelar" como secundario y acciones primarias con el mismo estilo.',
+    'Los botones de los modales siempre quedan a la derecha en una sola fila (con mejor distribución y tamaño en mobile).',
+    'Footer centrado en mobile y modales siempre centrados verticalmente en pantalla.',
+    'Exportación a PDF mejorada: nuevo modal de opciones para elegir orientación A4 (horizontal o vertical), con estilos optimizados para impresión.',
+    'Sin emojis en los botones; se usan etiquetas de texto consistentes.'
+  ]},
+  {v:'1.2.0',fecha:'2026-06-11',titulo:'Equivalencia, generador IA y colapso',cambios:[
+    'Nueva opción "Aprobada por equivalencia" en las materias: si no tiene nota cargada, no afecta el promedio.',
+    'Generador de plan con IA: el botón "Generar con IA" del sidebar entrega un prompt listo para pegar en cualquier IA y obtener el JSON.',
+    'Colapso de columnas (períodos) y filas (años) completas con un click en cada encabezado. El estado se recuerda entre sesiones.',
+    'Badge "EQUIV" en las tarjetas marcadas como equivalencia.'
+  ]},
   {v:'1.1.0',fecha:'2026-06-11',titulo:'Mobile y modal Acerca de',cambios:[
     'Soporte completo para dispositivos móviles con sidebar a pantalla completa.',
     'Botón hamburguesa en el topbar para abrir el panel lateral.',
@@ -608,6 +720,18 @@ var materias=migrar(store.get('pe2_materias'));
 var config=Object.assign({},DEFAULT_CONFIG,store.get('pe2_config')||{});
 if(!materias){materias=[];}
 var seleccionada=null, collapsed=false, filtro='', filtroEstado='', undoStack=null, dragId=null;
+var collapsedYears=store.get('pe2_collapsedYears')||[];
+var collapsedCols=store.get('pe2_collapsedCols')||[];
+function toggleYearCollapse(a){
+  var i=collapsedYears.indexOf(a);
+  if(i>=0)collapsedYears.splice(i,1);else collapsedYears.push(a);
+  store.set('pe2_collapsedYears',collapsedYears);render();
+}
+function toggleColCollapse(p){
+  var i=collapsedCols.indexOf(p);
+  if(i>=0)collapsedCols.splice(i,1);else collapsedCols.push(p);
+  store.set('pe2_collapsedCols',collapsedCols);render();
+}
 
 function save(){store.set('pe2_materias',materias);store.set('pe2_config',config);}
 
@@ -619,6 +743,7 @@ function migrar(arr){
     if(!mm.estado){mm.estado=mm.aprobada?'aprobada':'pendiente';}
     if(!Array.isArray(mm.notas)){mm.notas=(mm.nota!=null)?[mm.nota]:[];}
     if(mm.regVence===undefined)mm.regVence='';
+    if(mm.equivalencia===undefined)mm.equivalencia=false;
     delete mm.aprobada;delete mm.nota;
     return mm;
   });
@@ -805,9 +930,14 @@ function render(){
   var red=redDe(seleccionada);
   var board=document.getElementById('board');
   var html='';
-  // header row
+  // header row con botones de colapso de columna
   html+='<div class="brow bhead"><div class="corner"></div>';
-  for(var c=1;c<=cols;c++)html+='<div class="colh">'+P.label+' '+c+'</div>';
+  for(var c=1;c<=cols;c++){
+    var colColl=collapsedCols.indexOf(c)>=0;
+    html+='<div class="colh'+(colColl?' col-collapsed':'')+'" data-col="'+c+'" data-toggle-col="'+c+'" title="Click para '+(colColl?'expandir':'colapsar')+'">'+
+      '<span class="hdr-lbl">'+P.label+' '+c+'</span>'+
+      '</div>';
+  }
   html+='</div>';
   // construir lista de filas de año: enteras + medio año opcional
   var rows=[];
@@ -815,12 +945,15 @@ function render(){
   if(config.medioAnio)rows.push({anio:config.anios+1,cols:Math.max(1,Math.ceil(cols/2)),label:'½',medio:true});
   rows.forEach(function(row){
     var a=row.anio;
-    var lbl='<span class="n">'+row.label+'</span><span class="t">'+(row.medio?'Medio año':'Año')+'</span>';
+    var yearColl=collapsedYears.indexOf(a)>=0;
     var anuales=materias.filter(function(m){return m.anio===a&&m.anual;}).sort(byNombre);
     var hasAnu=anuales.length>0;
+    var totalMaterias=materias.filter(function(m){return m.anio===a;}).length;
+    var lbl='<span class="n">'+row.label+'</span><span class="t">'+(row.medio?'Medio año':'Año')+'</span>';
+    var countBadge=yearColl?'<span class="yrh-count">'+totalMaterias+' materias</span>':'';
     // una sola fila por año
-    html+='<div class="yrow'+(hasAnu?' yrow-has-anu':'')+'">';
-    html+='<div class="yrh'+(row.medio?' yrh-medio':'')+'">'+lbl+'</div>';
+    html+='<div class="yrow'+(hasAnu?' yrow-has-anu':'')+(yearColl?' year-collapsed':'')+'">';
+    html+='<div class="yrh'+(row.medio?' yrh-medio':'')+'" data-toggle-year="'+a+'" title="Click para '+(yearColl?'expandir':'colapsar')+'">'+lbl+countBadge+'</div>';
     html+='<div class="ybody" style="--ycols:'+cols+'">';
     if(hasAnu){
       html+='<div class="cell annual-cell" data-anio="'+a+'" data-anual="1"><div class="annual-tag">Anuales</div>';
@@ -829,7 +962,8 @@ function render(){
     }
     for(var p=1;p<=row.cols;p++){
       var cel=materias.filter(function(m){return m.anio===a&&!m.anual&&m.periodo===p;}).sort(byNombre);
-      html+='<div class="cell" data-anio="'+a+'" data-periodo="'+p+'" data-anual="0" data-mobile-lbl="'+P.label+' '+p+'">';
+      var cColl=collapsedCols.indexOf(p)>=0;
+      html+='<div class="cell'+(cColl?' cell-col-collapsed':'')+'" data-anio="'+a+'" data-periodo="'+p+'" data-anual="0" data-mobile-lbl="'+P.label+' '+p+'">';
       cel.forEach(function(m){html+=cardHTML(m,red);});
       html+='</div>';
     }
@@ -860,6 +994,7 @@ function cardHTML(m,red){
   var P=PERIODS[config.tipoPeriodo];
   var tags='';
   if(m.tipo==='optativa')tags+='<span class="tag tag-opt">OPT</span>';
+  if(m.equivalencia)tags+='<span class="tag tag-equiv">EQUIV</span>';
   var prof=m.profesor?'<div class="c-line"><span class="c-ic">👤</span>'+esc(m.profesor)+'</div>':'';
   var fecha=m.fecha?'<div class="c-line"><span class="c-ic">🗓</span>'+esc(fmtFecha(m.fecha))+'</div>':'';
   var corr=m.correlativas.map(function(c){var x=byId(c);return x?x.nombre:null;}).filter(Boolean);
@@ -888,7 +1023,7 @@ function cardHTML(m,red){
     '<div class="c-top"><h3>'+esc(m.nombre)+'</h3><div class="c-tags">'+tags+
       '<button class="c-menu-btn" data-act="menu" title="Acciones">⋯</button></div></div>'+
     prof+fecha+corrLine+vence+
-    '<div class="c-mid">'+sel+notaBox+'</div>'+
+    '<div class="c-mid" data-print-estado="'+esc(ESTADO_LABEL[est]||'')+'">'+sel+notaBox+'</div>'+
     '<div class="c-foot">'+foot+'</div></article>';
 }
 function fmtFecha(iso){if(!iso)return'';var p=String(iso).split('-');if(p.length===3)return p[2]+'/'+p[1]+'/'+p[0];return iso;}
@@ -925,6 +1060,13 @@ function bindCards(){
       else{m.anual=false;m.periodo=parseInt(cell.getAttribute('data-periodo'),10);}
       save();render();
     });
+  });
+  // bindings de toggles de colapso (años y columnas)
+  Array.prototype.forEach.call(document.querySelectorAll('[data-toggle-year]'),function(btn){
+    btn.addEventListener('click',function(e){e.stopPropagation();toggleYearCollapse(parseInt(btn.getAttribute('data-toggle-year'),10));});
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-toggle-col]'),function(btn){
+    btn.addEventListener('click',function(e){if(isMobile())return;e.stopPropagation();toggleColCollapse(parseInt(btn.getAttribute('data-toggle-col'),10));});
   });
 }
 
@@ -982,7 +1124,7 @@ function renderLista(){
 function openModal(mat){
   closeCardMenu();
   var nuevo=!mat;
-  var f=mat?Object.assign({},mat,{correlativas:mat.correlativas.slice(),notas:(mat.notas||[]).slice()}):{id:null,nombre:'',anio:1,periodo:1,anual:false,tipo:'obligatoria',peso:1,promocionable:false,regularizable:false,estado:'pendiente',notas:[],regVence:'',profesor:'',fecha:'',obs:'',correlativas:[]};
+  var f=mat?Object.assign({},mat,{correlativas:mat.correlativas.slice(),notas:(mat.notas||[]).slice()}):{id:null,nombre:'',anio:1,periodo:1,anual:false,tipo:'obligatoria',peso:1,promocionable:false,regularizable:false,estado:'pendiente',notas:[],regVence:'',equivalencia:false,profesor:'',fecha:'',obs:'',correlativas:[]};
   var P=PERIODS[config.tipoPeriodo],cols=P.cols;
   function opts(n,sel){var o='';for(var i=1;i<=n;i++)o+='<option value="'+i+'"'+(sel===i?' selected':'')+'>'+i+'°</option>';if(config.medioAnio){o+='<option value="'+(n+1)+'"'+(sel===n+1?' selected':'')+'>½ (medio año)</option>';}return o;}
   var corrCand=materias.filter(function(m){return m.id!==f.id;}).sort(function(a,b){return a.anio-b.anio||a.periodo-b.periodo||byNombre(a,b);});
@@ -1035,6 +1177,7 @@ function openModal(mat){
         '<div class="field"><label>Estado</label><select id="f_estado">'+estadoOpts+'</select></div>'+
         '<div class="field" id="wrap_venc"><label>Vence regularidad</label><input id="f_venc" type="date" value="'+esc(f.regVence||'')+'"></div>'+
       '</div>'+
+      '<div class="field" id="wrap_equiv"><label class="sw"><input type="checkbox" id="f_equiv" '+(f.equivalencia?'checked':'')+'> <span>Aprobada por equivalencia</span></label><small class="hint">Si no le ponés nota, no cuenta en el promedio.</small></div>'+
       '<div class="field" id="wrap_notas"><label>Notas (en orden cronológico)</label>'+notasUI(f.notas)+'</div>'+
       '<div class="field"><label>Notas / observaciones</label><textarea id="f_obs" placeholder="Texto libre del estudiante…">'+esc(f.obs)+'</textarea></div>'+
       '<div class="field"><label>Correlativas</label><div class="corrbox" id="corrbox">'+corrHTML+'</div></div>'+
@@ -1058,9 +1201,15 @@ function openModal(mat){
   anualCB.addEventListener('change',syncAnual);syncAnual();
   // tipo -> peso default
   document.getElementById('f_tipo').addEventListener('change',function(e){document.getElementById('f_peso').value=e.target.value==='optativa'?0.5:1;});
-  // estado -> mostrar/ocultar vencimiento
-  var estSel=document.getElementById('f_estado'),wrapVenc=document.getElementById('wrap_venc');
-  function syncEstado(){wrapVenc.style.display=estSel.value==='regularizada'?'':'none';}
+  // estado -> mostrar/ocultar vencimiento + habilitar equivalencia
+  var estSel=document.getElementById('f_estado'),wrapVenc=document.getElementById('wrap_venc'),equivCB=document.getElementById('f_equiv'),wrapEquiv=document.getElementById('wrap_equiv');
+  function syncEstado(){
+    wrapVenc.style.display=estSel.value==='regularizada'?'':'none';
+    var ap=estSel.value==='aprobada';
+    wrapEquiv.style.opacity=ap?'1':'.4';
+    equivCB.disabled=!ap;
+    if(!ap)equivCB.checked=false;
+  }
   estSel.addEventListener('change',syncEstado);syncEstado();
   // notas locales (se sincronizan al guardar)
   var notasLocal=f.notas.slice();
@@ -1107,6 +1256,7 @@ function openModal(mat){
       estado:estadoSel,
       notas:notasLocal.slice(),
       regVence:estadoSel==='regularizada'?document.getElementById('f_venc').value:'',
+      equivalencia:estadoSel==='aprobada'&&document.getElementById('f_equiv').checked,
       profesor:document.getElementById('f_prof').value.trim(),
       fecha:document.getElementById('f_fecha').value,
       obs:document.getElementById('f_obs').value.trim(),
@@ -1148,6 +1298,164 @@ function openWhatsNew(versionesAMostrar){
   document.getElementById('wnX').onclick=close;
   document.getElementById('wnOk').onclick=close;
   setTimeout(function(){document.getElementById('wnOk').focus();},10);
+}
+
+/* ─── modal: generar con IA ─── */
+function openAIPrompt(){
+  closeCardMenu();
+  var prompt = [
+    'Necesito que generes un archivo JSON con mi plan de estudios universitario, en el formato exacto que se describe abajo, para importarlo en una app de gestión de cursada.',
+    '',
+    'INSTRUCCIONES:',
+    '1. Te voy a describir mi carrera, materias, años y estado de cada una.',
+    '2. Vas a devolver UN SOLO bloque de JSON válido, sin texto adicional antes ni después.',
+    '3. No uses comentarios dentro del JSON.',
+    '4. Respetá EXACTAMENTE los nombres de campos y los valores permitidos.',
+    '',
+    'FORMATO DEL JSON:',
+    '{',
+    '  "appVersion": "1.1.0",',
+    '  "dataVersion": 3,',
+    '  "config": {',
+    '    "carrera": "Nombre de la carrera",',
+    '    "estudiante": "",',
+    '    "facultad": "",',
+    '    "universidad": "",',
+    '    "ingreso": "",',
+    '    "egreso": "",',
+    '    "anios": 5,',
+    '    "medioAnio": false,',
+    '    "tipoPeriodo": "cuatrimestre"',
+    '  },',
+    '  "materias": [',
+    '    {',
+    '      "id": "id-unico-1",',
+    '      "nombre": "Nombre de la materia",',
+    '      "anio": 1,',
+    '      "periodo": 1,',
+    '      "anual": false,',
+    '      "tipo": "obligatoria",',
+    '      "peso": 1,',
+    '      "promocionable": true,',
+    '      "regularizable": false,',
+    '      "estado": "pendiente",',
+    '      "notas": [],',
+    '      "regVence": "",',
+    '      "equivalencia": false,',
+    '      "profesor": "",',
+    '      "fecha": "",',
+    '      "obs": "",',
+    '      "correlativas": []',
+    '    }',
+    '  ]',
+    '}',
+    '',
+    'REGLAS DE LOS CAMPOS:',
+    '- tipoPeriodo: solo "bimestre" (6 columnas/año), "trimestre" (3), "semestre" (2) o "cuatrimestre" (2).',
+    '- anios: cantidad de años de la carrera (1 a 10).',
+    '- medioAnio: true si la carrera dura X años y medio (ej. 5.5).',
+    '- anual: true si la materia es anual (ocupa todo el año, no un período).',
+    '- tipo: "obligatoria" u "optativa".',
+    '- peso: 1 para obligatorias y 0.5 para optativas (o el peso real que aporten al promedio).',
+    '- promocionable y regularizable son MUTUAMENTE EXCLUYENTES (solo uno puede ser true, o ambos false).',
+    '- estado: "pendiente", "en_curso", "regularizada" o "aprobada".',
+    '- notas: array de números (ej. [7, 8.5]). La última es la nota final. Vacío si no hay notas.',
+    '- regVence: fecha de vencimiento de regularidad en formato "AAAA-MM-DD". Vacío si no aplica.',
+    '- equivalencia: true SOLO si la materia está aprobada por equivalencia. Si tiene equivalencia y no tiene nota, no cuenta en el promedio.',
+    '- correlativas: array con los "id" de las materias que son requisito previo. Si no tenés las correlatividades, dejalo vacío [].',
+    '- id: cada materia debe tener un id único (string corto, ej. "m01", "m02", "alg1").',
+    '',
+    'AHORA TE PASO MI INFORMACIÓN:',
+    '',
+    '[ACÁ PEGÁ TU PLAN DE ESTUDIOS COMPLETO: carrera, duración, lista de materias por año y período, cuáles aprobaste, notas, equivalencias, materias no promocionables, etc. Cuanto más detalle, mejor.]',
+    '',
+    'IMPORTANTE: devolveme SOLO el JSON, sin explicaciones ni texto adicional. Que sea válido y se pueda importar directamente.'
+  ].join('\n');
+
+  var html='<div class="overlay" id="ovAI"><div class="modal" style="max-width:640px"><div class="m-head"><h2>Generar plan con IA</h2><button class="m-x" id="aiX">×</button></div>'+
+    '<div class="m-body">'+
+      '<p class="ai-intro">Si tenés el plan de tu carrera y querés cargar todas las materias de una sola vez, podés usar una IA (ChatGPT, Claude, Gemini, etc.) para que te genere el archivo JSON automáticamente.</p>'+
+      '<div class="ai-steps">'+
+        '<div class="ai-step"><span class="ai-num">1</span><div><b>Copiá el prompt</b><small>Click en el botón de abajo.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">2</span><div><b>Pegalo en una IA</b><small>Junto con la lista completa de tu plan: materias, años, períodos, notas, equivalencias.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">3</span><div><b>Guardá el JSON</b><small>Copiá la respuesta, pegala en un archivo de texto y guardalo como <code>.json</code>.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">4</span><div><b>Importalo</b><small>Volvé acá y usá el botón <i>Importar</i>.</small></div></div>'+
+      '</div>'+
+      '<textarea class="ai-prompt" id="aiPromptText" readonly>'+esc(prompt)+'</textarea>'+
+      '<p class="ai-warn">⚠ Siempre revisá el JSON antes de importarlo. Las IA pueden equivocarse con nombres de materias o estructura. Importar reemplaza tu plan actual.</p>'+
+    '</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-light" id="aiClose">Cerrar</button><button class="btn btn-pri" id="aiCopy">Copiar prompt</button></div></div>'+
+    '</div></div>';
+  document.getElementById('modalRoot').innerHTML=html;
+  var ov=document.getElementById('ovAI');
+  function close(){document.getElementById('modalRoot').innerHTML='';document.removeEventListener('keydown',ek);}
+  function ek(e){if(e.key==='Escape')close();}
+  document.addEventListener('keydown',ek);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
+  document.getElementById('aiX').onclick=close;
+  document.getElementById('aiClose').onclick=close;
+  document.getElementById('aiCopy').onclick=function(){
+    var ta=document.getElementById('aiPromptText');
+    ta.select();ta.setSelectionRange(0,99999);
+    try{
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(ta.value).then(function(){toast('Prompt copiado al portapapeles');},function(){document.execCommand('copy');toast('Prompt copiado al portapapeles');});
+      }else{
+        document.execCommand('copy');toast('Prompt copiado al portapapeles');
+      }
+    }catch(e){toast('No se pudo copiar automáticamente. Seleccioná el texto manualmente.');}
+  };
+}
+
+/* ─── modal: bienvenida / guía ─── */
+function openWelcome(){
+  closeCardMenu();
+  var html='<div class="overlay" id="ovW"><div class="modal" style="max-width:580px"><div class="m-head"><h2>¿Cómo empezar?</h2><button class="m-x" id="wX">×</button></div>'+
+    '<div class="m-body">'+
+      '<p class="ai-intro">Guía rápida para sacarle el máximo provecho a la app. Podés volver a verla en cualquier momento desde el enlace <b>Ayuda</b> del pie de página.</p>'+
+      '<div class="ai-steps welcome-steps">'+
+        '<div class="welcome-section">Primeros pasos</div>'+
+        '<div class="ai-step"><span class="ai-num">1</span><div><b>Configurá tu carrera</b><small>Abrí <b>Configuración</b> en el panel lateral y cargá nombre de la carrera, estudiante, facultad, universidad, año de ingreso/egreso, cantidad de años y el tipo de período (bimestre, cuatrimestre, etc.).</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">2</span><div><b>Agregá tus materias</b><small>Click en <b>+ Agregar materia</b>. Cada una se ubica por año y período. Marcá si es <b>obligatoria</b> u <b>optativa</b>, su peso para el promedio, si es <b>anual</b>, y si tiene profesor o fecha de cursado.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">3</span><div><b>Cargá las correlatividades</b><small>Al editar una materia, en la sección <b>Correlativas</b> marcá las que son requisito previo. La app te bloqueará intentos de aprobar si faltan correlativas, y te avisará si querés desaprobar una materia requisito de otras aprobadas.</small></div></div>'+
+
+        '<div class="welcome-section">Día a día</div>'+
+        '<div class="ai-step"><span class="ai-num">4</span><div><b>Cambiá el estado desde la tarjeta</b><small>Sin abrir el modal, podés cambiar el estado de una materia (Pendiente, En curso, Regularizada, Aprobada) desde el selector que aparece en la tarjeta misma.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">5</span><div><b>Cargá tus notas</b><small>Una materia puede tener varias notas (por ejemplo, si la cursaste y desaprobaste el final). La última cargada es la <b>nota final</b> y se muestra en la tarjeta. Se calculan dos promedios: con y sin aplazos.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">6</span><div><b>Marcá equivalencias</b><small>Si una materia te la aprobaron por equivalencia, marcala como tal en el modal de edición. Si no le ponés nota, no afecta el promedio.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">7</span><div><b>Vencimiento de regularidad</b><small>Cuando una materia está <b>Regularizada</b> podés cargar la fecha hasta la que tenés tiempo de rendir el final. Si esa fecha pasa, la tarjeta se marca automáticamente como <b>Libre</b> (en rojo).</small></div></div>'+
+
+        '<div class="welcome-section">Visualización</div>'+
+        '<div class="ai-step"><span class="ai-num">8</span><div><b>Mirá la red de correlativas</b><small>Click sobre cualquier tarjeta y se resaltan todas las materias relacionadas: las que son requisito y las que dependen de ella. Verde si está aprobada, rojo si todavía no.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">9</span><div><b>Colapsá filas y columnas</b><small>Click sobre el encabezado de un año (ej. <b>1°</b>) o de un período (ej. <b>Bimestre 1</b>) para colapsarlo cuando no querés verlo. El estado se guarda entre sesiones.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">10</span><div><b>Filtrá por estado</b><small>En la barra superior tenés un selector para mostrar solo materias aprobadas, libres, en curso, etc. Útil para visualizar lo que falta.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">11</span><div><b>Arrastrá para reubicar</b><small>Podés tomar una tarjeta y soltarla en otra celda para cambiarle el año o el período sin abrir el modal.</small></div></div>'+
+
+        '<div class="welcome-section">Cuidá tu progreso</div>'+
+        '<div class="ai-step ai-step-warn"><span class="ai-num">!</span><div><b>Exportá tus datos cada tanto</b><small>La app guarda todo en tu navegador, pero si lo cambiás, lo formateás o limpiás cookies, perdés el avance. Andá a <b>Configuración → Exportar JSON</b> y guardá el archivo. La app te recordará hacerlo cada 7 días.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">12</span><div><b>Importá tu plan en otro dispositivo</b><small>Para usar la app en otra compu o celular, exportá el JSON de un lado e importalo del otro desde <b>Configuración → Importar JSON</b>. Reemplaza el plan actual.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">13</span><div><b>Recuperá una eliminación</b><small>Si borrás una materia por error, podés deshacerla con <b>Ctrl+Z</b> o con el botón "Deshacer" del aviso que aparece abajo.</small></div></div>'+
+
+        '<div class="welcome-section">Atajos</div>'+
+        '<div class="ai-step"><span class="ai-num">★</span><div><b>Generador con IA</b><small>¿Tenés el plan completo a mano? Usá <b>Generar con IA</b> para obtener un prompt listo para pegar en ChatGPT, Claude o Gemini junto con tu plan, recibir el JSON, y importarlo. Te ahorra cargar materia por materia.</small></div></div>'+
+        '<div class="ai-step"><span class="ai-num">★</span><div><b>Exportar a PDF</b><small>Desde el botón <b>PDF</b> podés generar una versión imprimible o guardarla como PDF en A4 (horizontal o vertical).</small></div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-pri" id="wOk">Entendido</button></div></div>'+
+    '</div></div>';
+  document.getElementById('modalRoot').innerHTML=html;
+  var ov=document.getElementById('ovW');
+  function close(){
+    document.getElementById('modalRoot').innerHTML='';
+    document.removeEventListener('keydown',ek);
+    store.set('pe2_welcomeSeen',1);
+  }
+  function ek(e){if(e.key==='Escape'||e.key==='Enter')close();}
+  document.addEventListener('keydown',ek);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
+  document.getElementById('wX').onclick=close;
+  document.getElementById('wOk').onclick=close;
+  setTimeout(function(){var ok=document.getElementById('wOk');if(ok)ok.focus();},10);
 }
 
 /* ─── modal acerca de ─── */
@@ -1257,7 +1565,47 @@ function importData(e){
   };
   r.readAsText(file);e.target.value='';
 }
-function exportPDF(){window.print();}
+function exportPDF(){openPDFOptions();}
+
+function openPDFOptions(){
+  closeCardMenu();
+  var savedOrient=store.get('pe2_pdfOrient')||'landscape';
+  var html='<div class="overlay" id="ovPDF"><div class="modal" style="max-width:440px"><div class="m-head"><h2>Exportar a PDF</h2><button class="m-x" id="pdfX">×</button></div>'+
+    '<div class="m-body">'+
+      '<p class="ai-intro">Se imprimirá tu plan de estudios en formato A4. Elegí la orientación más adecuada según tus períodos:</p>'+
+      '<div class="field"><label>Orientación</label><div class="radio-row">'+
+        '<label class="radio"><input type="radio" name="pdf_orient" value="landscape" '+(savedOrient==='landscape'?'checked':'')+'> <span>Horizontal (recomendado para 4+ períodos)</span></label>'+
+        '<label class="radio"><input type="radio" name="pdf_orient" value="portrait" '+(savedOrient==='portrait'?'checked':'')+'> <span>Vertical (recomendado para 1–3 períodos)</span></label>'+
+      '</div></div>'+
+      '<p class="hint" style="margin-top:8px">En el diálogo de impresión que se abrirá, podés elegir "Guardar como PDF" como destino para descargarlo.</p>'+
+    '</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-light" id="pdfCancel">Cancelar</button><button class="btn btn-pri" id="pdfOk">Imprimir</button></div></div>'+
+    '</div></div>';
+  document.getElementById('modalRoot').innerHTML=html;
+  var ov=document.getElementById('ovPDF');
+  function close(){
+    document.body.classList.remove('print-portrait','print-landscape');
+    document.getElementById('modalRoot').innerHTML='';
+    document.removeEventListener('keydown',ek);
+  }
+  function ek(e){if(e.key==='Escape')close();}
+  document.addEventListener('keydown',ek);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
+  document.getElementById('pdfX').onclick=close;
+  document.getElementById('pdfCancel').onclick=close;
+  document.getElementById('pdfOk').onclick=function(){
+    var orient=(document.querySelector('input[name="pdf_orient"]:checked')||{}).value||'landscape';
+    store.set('pe2_pdfOrient',orient);
+    document.body.classList.remove('print-portrait','print-landscape');
+    document.body.classList.add('print-'+orient);
+    close();
+    setTimeout(function(){
+      window.print();
+      // Limpiar clase después de imprimir
+      setTimeout(function(){document.body.classList.remove('print-portrait','print-landscape');},800);
+    },100);
+  };
+}
 function limpiar(){confirmar('Limpiar progreso','Se desmarcarán todas las aprobaciones y se borrarán las notas y vencimientos. ¿Continuar?',function(){materias.forEach(function(m){m.estado='pendiente';m.notas=[];m.regVence='';});save();render();});}
 function wipe(){confirmar('Borrar todo','¿Borrar TODAS las materias del plan? Esta acción es definitiva.',function(){confirmar('Confirmar borrado','Vas a perder todo el plan. ¿Confirmás de nuevo?',function(){materias=[];seleccionada=null;save();render();});});}
 
@@ -1296,12 +1644,14 @@ function toast(msg,action){
 /* ─── bind topbar / sidebar ─── */
 document.getElementById('btnAdd').onclick=function(){openModal(null);};
 document.getElementById('btnConfig').onclick=openConfig;
-document.getElementById('btnAbout').onclick=openAbout;
-document.getElementById('btnExport').onclick=exportData;
-document.getElementById('btnImport').onclick=function(){document.getElementById('fileInput').click();};
+// Click en la versión del footer abre el modal "Acerca de"
+// Click en la zona info del footer abre el modal "Acerca de"
+document.querySelectorAll('.foot-info').forEach(function(el){el.style.cursor='pointer';el.addEventListener('click',openAbout);});
 document.getElementById('fileInput').addEventListener('change',importData);
 document.getElementById('btnPdf').onclick=exportPDF;
 document.getElementById('btnClean').onclick=limpiar;
+document.getElementById('btnAI').onclick=openAIPrompt;
+document.getElementById('btnHelp').onclick=function(e){e.preventDefault();e.stopPropagation();openWelcome();};
 document.getElementById('btnWipe').onclick=wipe;
 document.getElementById('search').addEventListener('input',function(e){filtro=e.target.value;renderLista();});
 function isMobile(){return window.matchMedia('(max-width:768px)').matches;}
@@ -1373,6 +1723,10 @@ function avisos(){
       // primera vez: guardar versión actual sin mostrar nada (no consideramos "actualización")
       store.set('pe2_lastSeenVersion',APP_VERSION);
     }
+    // 0.5) Primer uso: mostrar guía de bienvenida si la app está limpia y no se vio antes
+    var welcomeSeen=store.get('pe2_welcomeSeen');
+    var planVacio=materias.length===0&&!config.carrera;
+    if(!welcomeSeen&&planVacio){openWelcome();return;}
   }
   // 1) Modo incógnito / storage no disponible
   if(!storageOK){
