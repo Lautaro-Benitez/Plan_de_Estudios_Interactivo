@@ -35,6 +35,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .app{display:grid;grid-template-columns:var(--sb-w) 1fr;height:100vh;transition:grid-template-columns .22s ease}
 .app.collapsed{grid-template-columns:0 1fr}
 .app.collapsed .sidebar{width:0;border:none;overflow:hidden}
+.sb-backdrop{display:none}
 .fab-open{position:fixed;top:14px;left:14px;z-index:60;background:var(--panel);color:#fff;border:none;width:38px;height:38px;border-radius:9px;font-size:18px;box-shadow:var(--shadow-2);display:none;align-items:center;justify-content:center}
 .app.collapsed .fab-open{display:flex}
 .app.collapsed .topbar{padding-left:64px}
@@ -233,7 +234,99 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 @keyframes fade{from{opacity:0}}
 @keyframes rise{from{opacity:0;transform:translate(-50%,10px)}}
 
-@media (max-width:860px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:50;width:280px;box-shadow:var(--shadow-3)}.app:not(.collapsed) .main{filter:blur(1px)}}
+/* ════════ MOBILE ════════ */
+@media (max-width:768px){
+  /* Scrollbars ocultas en mobile (scroll sigue funcionando con gestos) */
+  *{scrollbar-width:none!important}
+  *::-webkit-scrollbar{display:none!important;width:0!important;height:0!important}
+
+  /* App layout: sidebar como off-canvas */
+  .app{grid-template-columns:1fr;height:100vh;height:100dvh}
+  .app.collapsed{grid-template-columns:1fr}
+
+  /* Sidebar off-canvas a pantalla completa */
+  .sidebar{position:fixed;top:0;left:0;bottom:0;width:100vw;z-index:200;transform:translateX(-100%);transition:transform .25s ease;box-shadow:0 0 0 transparent}
+  .app.sb-open .sidebar{transform:translateX(0);box-shadow:none}
+  .app.collapsed .sidebar{transform:translateX(-100%);width:100vw;border:none;overflow:hidden}
+  /* Backdrop innecesario en pantalla completa */
+  .sb-backdrop{display:none!important}
+
+  /* Botón hamburguesa siempre visible en topbar */
+  .fab-open{position:static;display:flex!important;width:38px;height:38px;border-radius:8px;background:var(--surface-2);color:var(--ink);border:1px solid var(--line);box-shadow:none;flex-shrink:0}
+  .fab-open:hover{background:var(--line)}
+  .app.collapsed .topbar{padding-left:0}
+
+  /* Topbar reorganizado */
+  .topbar-row{padding:0 12px;gap:10px;height:56px}
+  .tb-info{min-width:0}
+  .tb-info h1{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tb-info p{font-size:11px}
+  .tb-meta{display:none}
+  .progress{padding:7px 12px 9px;gap:9px}
+  .progress-lbl{min-width:auto;font-size:11px}
+  .filterEstado-mobile{padding:6px 10px}
+
+  /* Sidebar interior */
+  .sb-head{height:56px;padding:0 12px}
+  .sb-body{padding:12px;gap:14px}
+  .sb-title b{font-size:13px}
+  .sb-title span{font-size:10.5px}
+  .sb-toggle{width:36px;height:36px;font-size:22px;background:rgba(255,255,255,.12)}
+
+  /* Board: grilla a una columna por fila */
+  .board-wrap{padding:14px 12px}
+  .brow{grid-template-columns:1fr;gap:8px;margin-bottom:14px}
+  .yrow{grid-template-columns:1fr;gap:0;margin-bottom:18px}
+  .ybody{grid-template-columns:1fr;gap:8px;margin-top:8px}
+  .yrow-has-anu .ybody{grid-template-rows:auto}
+  .cell.annual-cell{grid-column:1/-1}
+  /* Header de año pasa a banner horizontal */
+  .yrh{flex-direction:row;justify-content:flex-start;gap:8px;padding:8px 12px;border-radius:6px}
+  .yrh .n{font-size:18px}
+  /* Header de columnas oculto en mobile: lo reemplaza un mini-tag por celda */
+  .bhead{display:none}
+  .cell{padding:8px 9px;min-height:50px}
+  .cell::before{content:attr(data-mobile-lbl);display:block;font-size:9.5px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px;padding-left:2px}
+  .cell.annual-cell::before{content:""}
+  .cell-off{display:none}
+
+  /* Tarjetas */
+  .card{padding:9px 10px}
+  .c-top h3{font-size:13px}
+
+  /* Modales: ocupan más viewport */
+  .overlay{padding:8px;align-items:flex-start;padding-top:5vh}
+  .modal{width:100%!important;max-width:100%!important;max-height:92vh}
+  .m-head{padding:13px 14px}
+  .m-head h2{font-size:16px}
+  .m-body{padding:14px;gap:12px}
+  .m-foot{padding:11px 14px;flex-wrap:wrap}
+  .m-foot .l,.m-foot .r{flex:1}
+  .grid2,.grid3,.grid4{grid-template-columns:1fr 1fr;gap:10px}
+  .row.toggles,.switches{flex-direction:column;align-items:stretch;gap:8px}
+  .radio-row{flex-direction:column;gap:8px}
+  .corrbox{max-height:280px}
+
+  /* Filter chip más compacto */
+  .chip-sel{padding:6px 10px;font-size:11.5px;max-width:140px}
+
+  /* Toast más angosto */
+  .toast{max-width:calc(100vw - 24px);left:12px;right:12px;transform:none;bottom:14px}
+  .toast-wide{max-width:calc(100vw - 24px)}
+
+  /* About modal */
+  .about-hero h3{font-size:16px}
+  .about-link{padding:10px 11px;gap:10px}
+}
+
+/* Pantallas muy chicas: ajustes finales */
+@media (max-width:380px){
+  .topbar-row{padding:0 10px;gap:8px}
+  .tb-info h1{font-size:14px}
+  .chip-sel{max-width:110px;font-size:11px}
+  .progress-lbl{font-size:10.5px}
+  .board-wrap{padding:12px 10px}
+}
 
 /* ════ PRINT / PDF ════ */
 .print-only{display:none}
@@ -329,6 +422,18 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .about-credit{font-size:12px;color:var(--ink-3);text-align:center;line-height:1.5;padding-top:8px;border-top:1px solid var(--line);margin-top:2px}
 .about-credit b{color:var(--ink);font-weight:600}
 
+/* ── modal what's new ── */
+.wn-intro{font-size:13px;color:var(--ink-2);line-height:1.55}
+.wn-block{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.wn-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:7px}
+.wn-ver{background:var(--ink);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:2px 7px;border-radius:4px;letter-spacing:.01em}
+.wn-title{font-size:13.5px;font-weight:600;color:var(--ink);flex:1;min-width:0}
+.wn-date{font-size:10.5px;color:var(--ink-3);font-family:'IBM Plex Mono',monospace}
+.wn-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:5px}
+.wn-list li{font-size:12.5px;color:var(--ink);line-height:1.5;padding-left:16px;position:relative}
+.wn-list li::before{content:"";position:absolute;left:4px;top:9px;width:4px;height:4px;background:var(--accent);border-radius:50%}
+.wn-safe{font-size:11.5px;color:var(--ink-3);text-align:center;padding:8px;background:var(--ok-soft);border-radius:6px;border:1px solid #c3dccc;margin-top:4px}
+
 /* ── loader inicial ── */
 .loader{position:fixed;inset:0;z-index:9999;background:#23262a;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease;font-family:'IBM Plex Sans',system-ui,sans-serif}
 .loader.hide{opacity:0;pointer-events:none}
@@ -352,13 +457,13 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   </div>
   <div class="loader-foot">
-    <span class="loader-ver">v<span id="loaderVerLbl">1.0</span></span>
+    <span class="loader-ver">v<span id="loaderVerLbl">1.1.0</span></span>
     <span class="loader-sep">·</span>
-    <span class="loader-by">Lautaro Benitez — IN3DITO 2026</span>
+    <span class="loader-by">Lautaro Benitez · 2026</span>
   </div>
 </div>
 <div class="app collapsed-off" id="app">
-  <button class="fab-open" id="btnExpand" title="Mostrar panel">☰</button>
+  <div class="sb-backdrop" id="sbBackdrop"></div>
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-head">
@@ -406,6 +511,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
   <div class="main">
     <div class="topbar">
       <div class="topbar-row">
+        <button class="fab-open" id="btnExpand" title="Mostrar panel">☰</button>
         <div class="tb-info">
           <h1 id="tbCarrera" class="none">Carrera sin configurar <span class="tb-meta" id="tbMeta"></span></h1>
           <p id="tbSub" class="none">Configurá estudiante, facultad y universidad en ⚙ Configuración</p>
@@ -431,7 +537,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
       <div class="print-only p-head" id="printHead"></div>
       <div class="board" id="board"></div>
     </div>
-    <footer class="app-foot print-foot">Plan de Estudios v<span class="vlbl"></span> · Lautaro Benitez — IN3DITO 2026</footer>
+    <footer class="app-foot print-foot">Plan de Estudios v<span class="vlbl"></span> · Lautaro Benitez · 2026</footer>
   </div>
 </div>
 
@@ -459,8 +565,39 @@ var store={
 var uid=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);};
 
 var PERIODS={bimestre:{label:'Bimestre',cols:6},trimestre:{label:'Trimestre',cols:3},semestre:{label:'Semestre',cols:2},cuatrimestre:{label:'Cuatrimestre',cols:2}};
-var APP_VERSION='1.0';
+var APP_VERSION='1.1.0';
 var DATA_VERSION=2;
+// ─────────────────────────────────────────────────────────────────────────
+// Novedades por versión (más reciente primero). Alineado con CHANGELOG.md
+//
+// PARA AGREGAR UNA NUEVA VERSIÓN:
+//   1) Subir APP_VERSION arriba (ej. '1.2.0').
+//   2) Agregar un objeto nuevo AL INICIO de este array con la forma:
+//      {v:'1.2.0', fecha:'AAAA-MM-DD', titulo:'...', cambios:[...]}
+//   3) Actualizar CHANGELOG.md con la misma información.
+//
+// Al recargar, los usuarios verán el modal con todas las versiones que se
+// hayan saltado desde su última visita. NO se tocan sus datos guardados.
+// ─────────────────────────────────────────────────────────────────────────
+var CHANGES_BY_VERSION=[
+  {v:'1.1.0',fecha:'2026-06-11',titulo:'Mobile y modal Acerca de',cambios:[
+    'Soporte completo para dispositivos móviles con sidebar a pantalla completa.',
+    'Botón hamburguesa en el topbar para abrir el panel lateral.',
+    'Grilla del plan reorganizada en una sola columna en celulares.',
+    'Modales y toasts adaptados a pantallas chicas.',
+    'Nuevo modal "Acerca de" con enlaces al README y la licencia.',
+    'Las nuevas instalaciones arrancan sin materias precargadas.',
+    'Aviso automático de novedades al actualizar a una versión nueva.'
+  ]},
+  {v:'1.0.0',fecha:'2026-05-28',titulo:'Primera versión pública',cambios:[
+    'Gestión completa de materias: alta, edición, duplicación y eliminación.',
+    'Correlatividades con detección de ciclos y resaltado de la red.',
+    'Cinco estados: Pendiente, En curso, Regularizada, Aprobada, Libre.',
+    'Múltiples notas por materia con promedio con y sin aplazos.',
+    'Barra de progreso con corredor animado.',
+    'Exportación a JSON y PDF, drag & drop, deshacer eliminación.'
+  ]}
+];
 // estados de cursada (orden de avance)
 var ESTADOS=['pendiente','en_curso','regularizada','aprobada'];
 var ESTADO_LABEL={pendiente:'Pendiente',en_curso:'En curso',regularizada:'Regularizada',aprobada:'Aprobada',libre:'Libre',bloqueada:'Bloqueada'};
@@ -692,7 +829,7 @@ function render(){
     }
     for(var p=1;p<=row.cols;p++){
       var cel=materias.filter(function(m){return m.anio===a&&!m.anual&&m.periodo===p;}).sort(byNombre);
-      html+='<div class="cell" data-anio="'+a+'" data-periodo="'+p+'" data-anual="0">';
+      html+='<div class="cell" data-anio="'+a+'" data-periodo="'+p+'" data-anual="0" data-mobile-lbl="'+P.label+' '+p+'">';
       cel.forEach(function(m){html+=cardHTML(m,red);});
       html+='</div>';
     }
@@ -983,6 +1120,36 @@ function openModal(mat){
   };
 }
 
+/* ─── modal de novedades por versión ─── */
+function openWhatsNew(versionesAMostrar){
+  closeCardMenu();
+  var bloques=versionesAMostrar.map(function(item){
+    var lis=item.cambios.map(function(c){return'<li>'+esc(c)+'</li>';}).join('');
+    return'<div class="wn-block"><div class="wn-head"><span class="wn-ver">v'+esc(item.v)+'</span><span class="wn-title">'+esc(item.titulo)+'</span><span class="wn-date">'+esc(item.fecha)+'</span></div><ul class="wn-list">'+lis+'</ul></div>';
+  }).join('');
+  var html='<div class="overlay" id="ovWN"><div class="modal" style="max-width:520px"><div class="m-head"><h2>¿Qué hay de nuevo?</h2><button class="m-x" id="wnX">×</button></div>'+
+    '<div class="m-body">'+
+      '<p class="wn-intro">Actualizamos la app desde la última vez que la usaste. Estos son los cambios:</p>'+
+      bloques+
+      '<p class="wn-safe">Tus datos (materias, notas, configuración) no fueron modificados.</p>'+
+    '</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-pri" id="wnOk">Entendido</button></div></div>'+
+    '</div></div>';
+  document.getElementById('modalRoot').innerHTML=html;
+  var ov=document.getElementById('ovWN');
+  function close(){
+    document.getElementById('modalRoot').innerHTML='';
+    document.removeEventListener('keydown',ek);
+    store.set('pe2_lastSeenVersion',APP_VERSION);
+  }
+  function ek(e){if(e.key==='Escape'||e.key==='Enter')close();}
+  document.addEventListener('keydown',ek);
+  ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
+  document.getElementById('wnX').onclick=close;
+  document.getElementById('wnOk').onclick=close;
+  setTimeout(function(){document.getElementById('wnOk').focus();},10);
+}
+
 /* ─── modal acerca de ─── */
 function openAbout(){
   closeCardMenu();
@@ -1006,7 +1173,7 @@ function openAbout(){
           '<svg class="about-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>'+
         '</a>'+
       '</div>'+
-      '<p class="about-credit">Desarrollado por <b>Lautaro Benitez</b><br>IN3DITO · 2026</p>'+
+      '<p class="about-credit">Desarrollado por <b>Lautaro Benitez</b><br>2026</p>'+
     '</div></div></div>';
   document.getElementById('modalRoot').innerHTML=html;
   var ov=document.getElementById('ovA');
@@ -1137,16 +1304,32 @@ document.getElementById('btnPdf').onclick=exportPDF;
 document.getElementById('btnClean').onclick=limpiar;
 document.getElementById('btnWipe').onclick=wipe;
 document.getElementById('search').addEventListener('input',function(e){filtro=e.target.value;renderLista();});
+function isMobile(){return window.matchMedia('(max-width:768px)').matches;}
+function closeSidebarMobile(){document.getElementById('app').classList.remove('sb-open');}
 document.getElementById('btnCollapse').onclick=function(){
+  if(isMobile()){closeSidebarMobile();return;}
   collapsed=true;document.getElementById('app').classList.add('collapsed');
 };
 document.getElementById('btnExpand').onclick=function(){
+  if(isMobile()){document.getElementById('app').classList.add('sb-open');return;}
   collapsed=false;document.getElementById('app').classList.remove('collapsed');
 };
+// Backdrop cierra sidebar en mobile
+document.getElementById('sbBackdrop').onclick=closeSidebarMobile;
+// En mobile, al tocar cualquier botón del sidebar (excepto el cierre que ya cierra), cerrar también
+document.querySelectorAll('.sb-body .btn, .sb-body .lista-item, .sb-body .li').forEach(function(el){
+  el.addEventListener('click',function(){if(isMobile())setTimeout(closeSidebarMobile,50);});
+});
+// Si la lista se renderiza dinámicamente, también delegamos
+document.getElementById('listaScroll').addEventListener('click',function(e){
+  if(isMobile()&&e.target.closest('.li'))setTimeout(closeSidebarMobile,50);
+});
 document.querySelector('.board-wrap').addEventListener('click',function(e){
   if(!e.target.closest('.card')&&seleccionada){seleccionada=null;render();}
 });
 document.getElementById('filterEstado').addEventListener('change',function(e){filtroEstado=e.target.value;render();});
+// Limpiar sb-open al volver a desktop
+window.addEventListener('resize',function(){if(!isMobile())document.getElementById('app').classList.remove('sb-open');});
 // versiones
 Array.prototype.forEach.call(document.querySelectorAll('.vlbl'),function(el){el.textContent=APP_VERSION;});
 // atajos de teclado: Ctrl+Z deshacer
@@ -1174,6 +1357,23 @@ render();
 
 // avisos posteriores al loader
 function avisos(){
+  // 0) ¿Versión nueva desde la última visita? Mostrar novedades (no toca datos del usuario)
+  if(storageOK){
+    var lastSeen=store.get('pe2_lastSeenVersion');
+    if(lastSeen&&lastSeen!==APP_VERSION){
+      // mostrar todas las versiones más nuevas que la última vista
+      var nuevas=[];
+      for(var i=0;i<CHANGES_BY_VERSION.length;i++){
+        if(CHANGES_BY_VERSION[i].v===lastSeen)break;
+        nuevas.push(CHANGES_BY_VERSION[i]);
+      }
+      if(nuevas.length){openWhatsNew(nuevas);return;} // sale acá; otros avisos en próxima carga
+      else{store.set('pe2_lastSeenVersion',APP_VERSION);} // versión desconocida, normalizar
+    }else if(!lastSeen){
+      // primera vez: guardar versión actual sin mostrar nada (no consideramos "actualización")
+      store.set('pe2_lastSeenVersion',APP_VERSION);
+    }
+  }
   // 1) Modo incógnito / storage no disponible
   if(!storageOK){
     confirmar('Modo privado detectado',

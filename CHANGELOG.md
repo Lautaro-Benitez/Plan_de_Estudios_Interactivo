@@ -6,6 +6,32 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/
 
 ---
 
+## [1.1.0] - 2026-06-11
+
+Soporte completo para dispositivos móviles. Inicio con sistema vacío. Modal "Acerca de" con enlaces a documentación y licencia.
+
+### Added
+- **Soporte mobile**: layout responsive completo para pantallas ≤ 768 px y ajustes finales para pantallas ≤ 380 px.
+  - **Sidebar off-canvas**: en mobile el panel lateral arranca oculto y se abre como cajón desde la izquierda con backdrop oscuro.
+  - **Botón hamburguesa** (☰) permanente en el topbar para abrir el sidebar.
+  - **Cierre por tap en el backdrop** o al seleccionar cualquier opción del sidebar.
+  - **Grilla del plan en una sola columna**: los períodos se apilan verticalmente con etiqueta de período arriba de cada celda.
+  - **Header de año como banner horizontal** (en lugar de columna izquierda).
+  - **Topbar compacto**: altura reducida a 56 px, título recortado con ellipsis, metadato de años oculto en mobile.
+  - **Modales a pantalla completa**: ocupan 100 % del ancho con padding reducido; grillas de configuración pasan a 2 columnas (o 1 en móviles muy chicos).
+  - **Toast a ancho completo** anclado al borde inferior.
+  - **Etiquetas de período por celda** (Cuatrimestre 1, etc.) en lugar del encabezado fijo de columnas, que se oculta en mobile.
+- **Modal "Acerca de"** accesible desde el sidebar con descripción del proyecto, versión, enlaces a README y LICENSE en GitHub, y créditos.
+
+### Changed
+- **Inicio en blanco**: nuevas instalaciones arrancan sin materias precargadas (antes cargaba un plan de ejemplo de 13 materias). La función `seed()` se mantiene en el código por compatibilidad.
+- **Layout del sidebar en desktop**: la lógica de colapso fue refactorizada para coexistir con el modo off-canvas de mobile sin conflictos.
+
+### Fixed
+- El sidebar fixed en pantallas chicas ahora se cierra correctamente al hacer tap fuera o seleccionar una acción (antes quedaba abierto bloqueando interacción).
+
+---
+
 ## [1.0.0] - 2026-05-28
 
 Primera versión pública estable. Aplicación web autónoma de un solo archivo HTML para gestión completa del plan de estudios.
@@ -109,4 +135,5 @@ El desarrollo se realizó de forma iterativa en sucesivas rondas de refinamiento
 - **Fixed** para corrección de bugs.
 - **Security** para vulnerabilidades.
 
-[1.0.0]: https://github.com/usuario/plan-estudios-interactivo/releases/tag/v1.0.0
+[1.1.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.1.0
+[1.0.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.0.0
