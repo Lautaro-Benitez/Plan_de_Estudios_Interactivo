@@ -6,6 +6,23 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/
 
 ---
 
+## [1.5.0] - 2026-06-11
+
+Historial de versiones accesible desde Acerca de, colapso real de columnas y correcciones de UX.
+
+### Added
+- **Acceso al historial completo de versiones** desde el modal "Acerca de" con un nuevo enlace "Historial de versiones" que muestra todos los cambios de la app, ordenados de la versión más reciente a la más antigua.
+
+### Changed
+- **Botón "Ayuda" en el footer** ahora tiene estilo de botón azul pequeño (antes era un enlace de texto), para hacerlo más visible y consistente con el resto de la UI.
+- **Colapso real de columnas**: cuando se colapsa una columna ahora se reduce realmente su ancho a 40 px (antes solo se ocultaba el contenido pero la columna seguía ocupando el ancho proporcional del grid). El header colapsado muestra `⋯`.
+
+### Fixed
+- **Hover de la versión del footer**: el cambio de color a azul ahora se activa solo cuando el mouse pasa por encima del texto de la versión, no de todo el footer.
+- **Nota automática en equivalencias**: las materias marcadas como aprobadas por equivalencia ya no reciben automáticamente la nota 7 cuando se eliminan sus notas. Esto restaura el comportamiento esperado: equivalencia sin nota = no afecta el promedio.
+
+---
+
 ## [1.4.0] - 2026-06-11
 
 Guía de inicio para nuevos usuarios, botón de ayuda persistente y botones principales con colores distintivos.
@@ -196,6 +213,7 @@ El desarrollo se realizó de forma iterativa en sucesivas rondas de refinamiento
 - **Fixed** para corrección de bugs.
 - **Security** para vulnerabilidades.
 
+[1.5.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.5.0
 [1.4.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.3.0
 [1.2.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.2.0

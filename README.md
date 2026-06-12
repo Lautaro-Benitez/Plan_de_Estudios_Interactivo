@@ -1,7 +1,7 @@
 # Plan de Estudios Interactivo
 
 [![Live](https://img.shields.io/badge/live-online-success)](https://lautaro-benitez.github.io/Plan_de_Estudios_Interactivo/)
-[![Version](https://img.shields.io/badge/version-1.4.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
 Aplicación web autónoma —un solo archivo HTML— para gestionar el plan de estudios de una carrera universitaria: materias, correlatividades, estados de cursada, notas, promedio ponderado, progreso de carrera, generación de plan con IA y exportación a PDF.

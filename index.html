@@ -97,13 +97,13 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .board-wrap{flex:1;overflow:auto;padding:22px}
 .board{min-width:fit-content}
 /* fila del encabezado de columnas */
-.brow{display:grid;grid-template-columns:74px repeat(var(--cols),minmax(210px,1fr));gap:11px;margin-bottom:11px}
+.brow{display:grid;grid-template-columns:74px var(--col-template,repeat(var(--cols),minmax(210px,1fr)));gap:11px;margin-bottom:11px}
 .bhead{margin-bottom:5px}
 .bhead .corner{background:transparent}
 .colh{font-size:12px;font-weight:600;color:#fff;text-align:center;padding:9px 22px;background:#2b2e33;border:1px solid #2b2e33;border-radius:var(--radius-s);letter-spacing:.01em}
 /* fila de año: un solo header de año + cuerpo subdividido */
 .yrow{display:grid;grid-template-columns:74px 1fr;gap:11px;margin-bottom:11px;align-items:stretch}
-.ybody{display:grid;grid-template-columns:repeat(var(--ycols),minmax(210px,1fr));gap:11px}
+.ybody{display:grid;grid-template-columns:var(--col-template,repeat(var(--ycols),minmax(210px,1fr)));gap:11px}
 .yrow-has-anu .ybody{grid-template-rows:auto auto}
 .yrh{display:flex;flex-direction:column;align-items:center;justify-content:center;background:#2b2e33;border:1px solid #2b2e33;border-radius:var(--radius-s);padding:8px 4px}
 .yrh .n{font-size:26px;font-weight:600;color:#fff;line-height:1;letter-spacing:-.01em}
@@ -137,17 +137,19 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 /* ── colapso de filas (años) y columnas (períodos) ── */
 .colh{cursor:pointer;user-select:none;transition:background .12s}
 .colh:hover{background:#3a3d42}
-.colh.col-collapsed{background:#3a3d42;opacity:.7}
+.colh.col-collapsed{background:#3a3d42;opacity:.85;padding:9px 4px;overflow:hidden;white-space:nowrap}
 .colh.col-collapsed:hover{opacity:1}
+.colh.col-collapsed .hdr-lbl{display:block;font-size:0;line-height:1}
+.colh.col-collapsed .hdr-lbl::after{content:"⋯";font-size:14px;font-weight:700;letter-spacing:2px}
 .colh .hdr-lbl{display:block;line-height:1.2}
 .yrh{cursor:pointer;user-select:none;transition:background .12s}
 .yrh:hover{background:#3a3d42}
 .yrh-count{position:absolute;bottom:5px;left:0;right:0;text-align:center;font-size:9px;color:rgba(255,255,255,.7);font-weight:600;letter-spacing:.04em}
 .yrow.year-collapsed .ybody{display:none}
 .yrow.year-collapsed .yrh{padding:14px 4px 18px}
-.cell.cell-col-collapsed{padding:6px;min-height:auto;background:repeating-linear-gradient(135deg,var(--surface-2),var(--surface-2) 6px,#eef0f3 6px,#eef0f3 12px)}
+.cell.cell-col-collapsed{padding:6px 2px;min-height:auto;background:repeating-linear-gradient(135deg,var(--surface-2),var(--surface-2) 4px,#eef0f3 4px,#eef0f3 8px);overflow:hidden}
 .cell.cell-col-collapsed > *{display:none}
-.cell.cell-col-collapsed::after{content:"⋯";display:block;text-align:center;color:var(--ink-3);font-size:14px;font-weight:700;letter-spacing:3px}
+.cell.cell-col-collapsed::after{content:"⋯";display:block;text-align:center;color:var(--ink-3);font-size:14px;font-weight:700;letter-spacing:2px}
 
 /* En mobile el colapso de columnas no tiene sentido (una sola columna). */
 @media (max-width:768px){
@@ -212,11 +214,9 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .btn-ai{color:#1a1a1a;background:#e8b339;border-color:#e8b339}
 .btn-ai:hover{background:#c9961d;border-color:#c9961d;color:#1a1a1a}
 
-/* ── enlace de ayuda en el footer ── */
-.help-link{color:var(--ink-2);font-weight:600;text-decoration:none;font-size:11px;cursor:pointer;transition:color .12s}
-.help-link:hover,.help-link:focus,.help-link:active{color:var(--accent);text-decoration:none}
-.help-link:visited{color:var(--ink-2)}
-@media print{.help-link{display:none!important}}
+/* ── botón de ayuda en el footer ── */
+.btn-help{padding:4px 12px;font-size:11.5px;font-weight:600;border-radius:5px;line-height:1}
+@media print{.btn-help{display:none!important}}
 .btn-sm{padding:6px 10px;font-size:12px}
 .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .btn-block{width:100%}
@@ -474,7 +474,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .foot-info{text-align:right}
 .ver-link{font-weight:700;color:var(--ink);text-decoration:none}
 .ver-link,.ver-link:hover,.ver-link:active,.ver-link:focus,.ver-link:visited{text-decoration:none}
-.app-foot:hover .ver-link{color:var(--accent)}
+.foot-info:hover .ver-link{color:var(--accent)}
 
 /* ── toast con acción ── */
 .toast-btn{margin-left:14px;background:var(--accent);color:#fff;border:none;padding:5px 12px;border-radius:5px;font-weight:600;font-size:12px;cursor:pointer}
@@ -487,6 +487,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
 .about-desc{font-size:13px;line-height:1.55;color:var(--ink-2)}
 .about-links{display:flex;flex-direction:column;gap:6px;margin:4px 0}
 .about-link{display:flex;align-items:center;gap:12px;padding:11px 13px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;text-decoration:none;color:var(--ink);transition:all .15s}
+.about-link-btn{font:inherit;text-align:left;cursor:pointer;width:100%}
 .about-link:hover{border-color:var(--ink-3);background:var(--surface);transform:translateX(2px)}
 .about-link>svg:first-child{flex-shrink:0;color:var(--ink-2)}
 .about-link span{flex:1;display:flex;flex-direction:column;gap:1px;min-width:0}
@@ -549,7 +550,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
     <div class="loader-bar"><div class="loader-bar-fill"></div></div>
   </div>
   <div class="loader-foot">
-    <span class="loader-ver">v<span id="loaderVerLbl">1.4.0</span></span>
+    <span class="loader-ver">v<span id="loaderVerLbl">1.5.0</span></span>
     <span class="loader-sep">·</span>
     <span class="loader-by">Lautaro Benitez · 2026</span>
   </div>
@@ -627,7 +628,7 @@ h1,h2,h3{font-weight:600;letter-spacing:-.01em}
       <div class="print-only p-head" id="printHead"></div>
       <div class="board" id="board"></div>
     </div>
-    <footer class="app-foot print-foot"><a href="#" class="help-link" id="btnHelp">Ayuda</a><span class="foot-info">Plan de Estudios <b class="ver-link">v<span class="vlbl"></span></b> · Lautaro Benitez · 2026</span></footer>
+    <footer class="app-foot print-foot"><button class="btn btn-config btn-help" id="btnHelp">Ayuda</button><span class="foot-info">Plan de Estudios <b class="ver-link">v<span class="vlbl"></span></b> · Lautaro Benitez · 2026</span></footer>
   </div>
 </div>
 
@@ -655,7 +656,7 @@ var store={
 var uid=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);};
 
 var PERIODS={bimestre:{label:'Bimestre',cols:6},trimestre:{label:'Trimestre',cols:3},semestre:{label:'Semestre',cols:2},cuatrimestre:{label:'Cuatrimestre',cols:2}};
-var APP_VERSION='1.4.0';
+var APP_VERSION='1.5.0';
 var DATA_VERSION=3;
 // ─────────────────────────────────────────────────────────────────────────
 // Novedades por versión (más reciente primero). Alineado con CHANGELOG.md
@@ -670,6 +671,13 @@ var DATA_VERSION=3;
 // hayan saltado desde su última visita. NO se tocan sus datos guardados.
 // ─────────────────────────────────────────────────────────────────────────
 var CHANGES_BY_VERSION=[
+  {v:'1.5.0',fecha:'2026-06-11',titulo:'Historial accesible, colapso real y correcciones',cambios:[
+    'Nuevo botón "Ayuda" en el footer, ahora con estilo de botón azul pequeño.',
+    'Acceso al historial completo de versiones desde el modal "Acerca de".',
+    'El colapso de columnas ahora reduce realmente el ancho a la mínima expresión (40 px), no solo el contenido.',
+    'Corrección: el hover sobre la versión del footer ahora se activa solo al pasar sobre el texto, no sobre todo el footer.',
+    'Corrección: las materias aprobadas por equivalencia ya no reciben automáticamente la nota 7. Si se elimina la nota, queda sin valor y no afecta el promedio.'
+  ]},
   {v:'1.4.0',fecha:'2026-06-11',titulo:'Guía de inicio y botones de color',cambios:[
     'Modal de bienvenida con guía paso a paso al iniciar la app por primera vez.',
     'Botón flotante de ayuda (?) en la esquina inferior derecha para reabrir la guía en cualquier momento.',
@@ -878,6 +886,12 @@ function duplicar(m){
 function render(){
   var P=PERIODS[config.tipoPeriodo],cols=P.cols;
   document.documentElement.style.setProperty('--cols',cols);
+  // Template dinámico: cada columna colapsada usa 40px, las demás minmax(210px,1fr)
+  var colTpl=[];
+  for(var ci=1;ci<=cols;ci++){
+    colTpl.push(collapsedCols.indexOf(ci)>=0?'40px':'minmax(210px,1fr)');
+  }
+  document.documentElement.style.setProperty('--col-template',colTpl.join(' '));
   // promedios (sin / con aplazos)
   var pr=promedio(false), prA=promedio(true);
   document.getElementById('promVal').textContent=pr!=null?pr.toFixed(2):'—';
@@ -1262,8 +1276,8 @@ function openModal(mat){
       obs:document.getElementById('f_obs').value.trim(),
       correlativas:corr
     };
-    // si pasa a aprobada y no hay nota, default 7
-    if(data.estado==='aprobada'&&!data.notas.length)data.notas=[7];
+    // si pasa a aprobada y no hay nota, default 7 (excepto si es por equivalencia: en ese caso respetar sin nota)
+    if(data.estado==='aprobada'&&!data.notas.length&&!data.equivalencia)data.notas=[7];
     if(f.id&&byId(f.id)){materias=materias.map(function(m){return m.id===f.id?data:m;});}
     else{materias.push(data);}
     save();close();render();
@@ -1271,26 +1285,27 @@ function openModal(mat){
 }
 
 /* ─── modal de novedades por versión ─── */
-function openWhatsNew(versionesAMostrar){
+function openWhatsNew(versionesAMostrar,modoHistorial){
   closeCardMenu();
   var bloques=versionesAMostrar.map(function(item){
     var lis=item.cambios.map(function(c){return'<li>'+esc(c)+'</li>';}).join('');
     return'<div class="wn-block"><div class="wn-head"><span class="wn-ver">v'+esc(item.v)+'</span><span class="wn-title">'+esc(item.titulo)+'</span><span class="wn-date">'+esc(item.fecha)+'</span></div><ul class="wn-list">'+lis+'</ul></div>';
   }).join('');
-  var html='<div class="overlay" id="ovWN"><div class="modal" style="max-width:520px"><div class="m-head"><h2>¿Qué hay de nuevo?</h2><button class="m-x" id="wnX">×</button></div>'+
-    '<div class="m-body">'+
-      '<p class="wn-intro">Actualizamos la app desde la última vez que la usaste. Estos son los cambios:</p>'+
-      bloques+
-      '<p class="wn-safe">Tus datos (materias, notas, configuración) no fueron modificados.</p>'+
-    '</div>'+
-    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-pri" id="wnOk">Entendido</button></div></div>'+
+  var titulo=modoHistorial?'Historial de versiones':'¿Qué hay de nuevo?';
+  var intro=modoHistorial
+    ?'<p class="wn-intro">Estas son todas las versiones publicadas de la app, ordenadas de la más reciente a la más antigua.</p>'
+    :'<p class="wn-intro">Actualizamos la app desde la última vez que la usaste. Estos son los cambios:</p>';
+  var safe=modoHistorial?'':'<p class="wn-safe">Tus datos (materias, notas, configuración) no fueron modificados.</p>';
+  var html='<div class="overlay" id="ovWN"><div class="modal" style="max-width:520px"><div class="m-head"><h2>'+titulo+'</h2><button class="m-x" id="wnX">×</button></div>'+
+    '<div class="m-body">'+intro+bloques+safe+'</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-pri" id="wnOk">'+(modoHistorial?'Cerrar':'Entendido')+'</button></div></div>'+
     '</div></div>';
   document.getElementById('modalRoot').innerHTML=html;
   var ov=document.getElementById('ovWN');
   function close(){
     document.getElementById('modalRoot').innerHTML='';
     document.removeEventListener('keydown',ek);
-    store.set('pe2_lastSeenVersion',APP_VERSION);
+    if(!modoHistorial)store.set('pe2_lastSeenVersion',APP_VERSION);
   }
   function ek(e){if(e.key==='Escape'||e.key==='Enter')close();}
   document.addEventListener('keydown',ek);
@@ -1480,6 +1495,11 @@ function openAbout(){
           '<span><b>Licencia</b><small>MIT License</small></span>'+
           '<svg class="about-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>'+
         '</a>'+
+        '<button class="about-link about-link-btn" id="aboutChangelog" type="button">'+
+          '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'+
+          '<span><b>Historial de versiones</b><small>Todos los cambios de la app</small></span>'+
+          '<svg class="about-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'+
+        '</button>'+
       '</div>'+
       '<p class="about-credit">Desarrollado por <b>Lautaro Benitez</b><br>2026</p>'+
     '</div></div></div>';
@@ -1490,6 +1510,11 @@ function openAbout(){
   document.addEventListener('keydown',ek);
   ov.addEventListener('mousedown',function(e){if(e.target===ov)close();});
   document.getElementById('aX').onclick=close;
+  document.getElementById('aboutChangelog').onclick=function(e){
+    e.preventDefault();
+    close();
+    setTimeout(function(){openWhatsNew(CHANGES_BY_VERSION,true);},80);
+  };
 }
 
 /* ─── modal configuración ─── */
@@ -1651,7 +1676,7 @@ document.getElementById('fileInput').addEventListener('change',importData);
 document.getElementById('btnPdf').onclick=exportPDF;
 document.getElementById('btnClean').onclick=limpiar;
 document.getElementById('btnAI').onclick=openAIPrompt;
-document.getElementById('btnHelp').onclick=function(e){e.preventDefault();e.stopPropagation();openWelcome();};
+document.getElementById('btnHelp').onclick=function(e){e.stopPropagation();openWelcome();};
 document.getElementById('btnWipe').onclick=wipe;
 document.getElementById('search').addEventListener('input',function(e){filtro=e.target.value;renderLista();});
 function isMobile(){return window.matchMedia('(max-width:768px)').matches;}
