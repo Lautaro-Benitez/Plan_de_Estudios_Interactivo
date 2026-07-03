@@ -6,6 +6,21 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/
 
 ---
 
+## [1.6.0] - 2026-07-03
+
+Extracción de scripts, correcciones de importación.
+
+### Added
+- **Nuevos badges** en el README con enlaces útiles y el correcto versionado del repositorio.
+
+### Changed
+- **Scripts y CSS externos**: El código JavaScript y CSS ahora residen en sus propios archivos (`main.js` y `styles.css` respectivamente) para mantener el `index.html` limpio.
+
+### Fixed
+- **Compatibilidad de importación**: Corrección al importar archivos JSON de versiones antiguas que no usaban el objeto `config` centralizado, permitiendo mantener la configuración de la carrera y el entorno sin problemas.
+
+---
+
 ## [1.5.0] - 2026-06-11
 
 Historial de versiones accesible desde Acerca de, colapso real de columnas y correcciones de UX.
