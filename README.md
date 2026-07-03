@@ -4,6 +4,8 @@
 [![Version](https://img.shields.io/badge/version-1.5.0-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-lightgrey)](LICENSE)
 
+![Captura de pantalla de Plan de Estudios Interactivo](Captura_de_pantalla_1.png)
+
 Aplicación web autónoma —un solo archivo HTML— para gestionar el plan de estudios de una carrera universitaria: materias, correlatividades, estados de cursada, notas, promedio ponderado, progreso de carrera, generación de plan con IA y exportación a PDF.
 
 No requiere instalación, servidor ni dependencias. Funciona 100% offline y se abre con doble clic en cualquier navegador moderno.
