@@ -1,7 +1,7 @@
 # Plan de Estudios Interactivo
 
 [![Live](https://img.shields.io/badge/live-online-success)](https://lautaro-benitez.github.io/Plan_de_Estudios_Interactivo/)
-[![Version](https://img.shields.io/badge/version-1.6.0-blue)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.7.0-blue)](CHANGELOG.md)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ![Windows](https://img.shields.io/badge/Windows-supported-blue?style=flat&logo=windows&logoColor=white)
@@ -9,11 +9,10 @@
 ![Linux](https://img.shields.io/badge/Linux-supported-blue?style=flat&logo=linux&logoColor=white)
 
 <!-- BADGES_START -->
-[![Electron](https://img.shields.io/badge/Electron-33.4.11-47848F?style=flat&logo=electron&logoColor=white)](https://www.electronjs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?style=flat&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![HTML5](https://img.shields.io/badge/HTML5-Vanilla-E34F26?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3-Vanilla-1572B6?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![Node.js](https://img.shields.io/badge/Node.js-Backend-43853D?style=flat&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![PWA](https://img.shields.io/badge/PWA-Ready-5A0FC8?style=flat&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
 
 ![Captura de pantalla de Plan de Estudios Interactivo](Captura_de_pantalla_1.png)
 

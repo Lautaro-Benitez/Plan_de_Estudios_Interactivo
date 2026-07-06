@@ -6,6 +6,19 @@ El formato se basa en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/
 
 ---
 
+## [1.7.0] - 2026-07-06
+
+Soporte completo para Progressive Web App (PWA).
+
+### Added
+- **Soporte PWA (Progressive Web App)**: La aplicación ahora se puede instalar en dispositivos móviles y de escritorio.
+- **Modo offline**: Gracias a la integración de un Service Worker, la aplicación funciona sin conexión a internet.
+- **Prompt de instalación**: Un nuevo modal invita a los usuarios a instalar la aplicación para un acceso más rápido.
+- **Archivos para PWA**: Se incluyeron un `manifest.json`, un icono vectorial (`icon.svg`) y un Service Worker (`sw.js`).
+- El badge del proyecto en el README se actualizó para reflejar el estado PWA-Ready.
+
+---
+
 ## [1.6.0] - 2026-07-03
 
 Extracción de scripts, correcciones de importación.
@@ -228,6 +241,8 @@ El desarrollo se realizó de forma iterativa en sucesivas rondas de refinamiento
 - **Fixed** para corrección de bugs.
 - **Security** para vulnerabilidades.
 
+[1.7.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.7.0
+[1.6.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.6.0
 [1.5.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.5.0
 [1.4.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.4.0
 [1.3.0]: https://github.com/Lautaro-Benitez/Plan_de_Estudios_Interactivo/releases/tag/v1.3.0

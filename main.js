@@ -17,7 +17,7 @@ var store={
 var uid=function(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);};
 
 var PERIODS={bimestre:{label:'Bimestre',cols:6},trimestre:{label:'Trimestre',cols:3},semestre:{label:'Semestre',cols:2},cuatrimestre:{label:'Cuatrimestre',cols:2}};
-var APP_VERSION='1.6.0';
+var APP_VERSION='1.7.0';
 var DATA_VERSION=3;
 // ─────────────────────────────────────────────────────────────────────────
 // Novedades por versión (más reciente primero). Alineado con CHANGELOG.md
@@ -32,6 +32,11 @@ var DATA_VERSION=3;
 // hayan saltado desde su última visita. NO se tocan sus datos guardados.
 // ─────────────────────────────────────────────────────────────────────────
 var CHANGES_BY_VERSION=[
+  {v:'1.7.0',fecha:'2026-07-06',titulo:'Soporte PWA (Progressive Web App)',cambios:[
+    'La aplicación ahora se puede instalar en dispositivos móviles y de escritorio (PWA).',
+    'Se añadió un Service Worker que permite utilizar la aplicación sin conexión (offline).',
+    'Se agregó un aviso (prompt) nativo para instalar la app desde el navegador.'
+  ]},
   {v:'1.6.0',fecha:'2026-07-03',titulo:'Extracción de scripts, correcciones de importación',cambios:[
     'Archivos CSS y JavaScript separados del archivo HTML principal para un código más limpio.',
     'Se agregaron nuevos badges informativos en el README y se actualizó el control de versiones.',
@@ -1154,4 +1159,57 @@ function avisos(){
     document.getElementById('tLater').onclick=function(){store.set('pe2_lastExport',now);r.innerHTML='';}; // resetea el contador
     document.getElementById('tNever').onclick=function(){store.set('pe2_dontRemindExport',1);r.innerHTML='';};
   },500);
+}
+
+/* ─── PWA e Instalación ─── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').catch(function(err) {
+      console.log('SW registration failed: ', err);
+    });
+  });
+}
+
+var deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  if (!store.get('pe2_installPromptShown')) {
+    store.set('pe2_installPromptShown', true);
+    setTimeout(showInstallModal, 1500);
+  }
+});
+
+function showInstallModal() {
+  if (!deferredPrompt) return;
+  var html = '<div class="overlay" id="ovInstall" style="z-index:99999"><div class="modal" style="max-width:440px"><div class="m-head"><h2>Instalar Aplicación</h2><button class="m-x" id="instX">×</button></div>'+
+    '<div class="m-body">'+
+      '<p class="ai-intro">Podés instalar <b>Plan de Estudios Interactivo</b> en tu dispositivo para acceder más rápido, usarlo como una app nativa y funcionar sin conexión.</p>'+
+    '</div>'+
+    '<div class="m-foot"><div class="l"></div><div class="r"><button class="btn btn-light" id="instCancel">Ahora no</button><button class="btn btn-pri" id="instOk">Instalar</button></div></div>'+
+    '</div></div>';
+  
+  var temp = document.createElement('div');
+  temp.innerHTML = html;
+  document.body.appendChild(temp.firstChild);
+  
+  var ov = document.getElementById('ovInstall');
+  function close() {
+    if(ov) ov.remove();
+    document.removeEventListener('keydown', ek);
+  }
+  function ek(e) { if(e.key === 'Escape') close(); }
+  document.addEventListener('keydown', ek);
+  ov.addEventListener('mousedown', function(e) { if(e.target === ov) close(); });
+  
+  document.getElementById('instX').onclick = close;
+  document.getElementById('instCancel').onclick = close;
+  document.getElementById('instOk').onclick = function() {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(choiceResult) {
+      deferredPrompt = null;
+      close();
+    });
+  };
 }

@@ -1,0 +1,17 @@
+{
+  "name": "Plan de Estudios Interactivo",
+  "short_name": "PlanEstudios",
+  "description": "Gestiona tu plan de estudios universitarios interactivo",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef0f3",
+  "theme_color": "#23262a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512 any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
